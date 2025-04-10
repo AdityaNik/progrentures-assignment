@@ -1,9 +1,10 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
 
 let todos = [];
 
@@ -22,6 +23,8 @@ function removeAtIndex(arr, index) {
   return newArray;
 }
 
+
+// get all the todos
 app.get('/todos', (req, res) => {
   res.json(todos);
 });
@@ -71,4 +74,8 @@ app.use((req, res, next) => {
   res.status(404).send();
 });
 
-module.exports = app;
+// module.exports = app;
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+})
