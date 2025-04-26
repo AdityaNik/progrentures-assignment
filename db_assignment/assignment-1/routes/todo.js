@@ -32,20 +32,19 @@ router.get('/todos', authenticateJwt, (req, res) => {
     });
 });
 
-router.patch('/todos/:todoId/done', authenticateJwt, (req, res) => {
+// chnange the value of done to true.
+
+router.post('/todos/:todoId/done', authenticateJwt, async (req, res) => {
   const { todoId } = req.params;
   const userId = req.userId;
 
-  Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })
-    .then((updatedTodo) => {
-      if (!updatedTodo) {
-        return res.status(404).json({ error: 'Todo not found' });
-      }
-      res.json(updatedTodo);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: 'Failed to update todo' });
-    });
+  const updatedTodo = await Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true });
+  
+  if (!updatedTodo) {
+    return res.status(404).json({ error: 'Todo not found' });
+  }else {
+    res.json(updatedTodo);
+  }
 });
 
 module.exports = router;
