@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div style="display: flex; justify-content: center; margin-top: 10px">
+        <h1>Simple To-Do App</h1>
+    </div>
+x
+    <div style="margin: 10px">
+        <div style="display: flex; justify-content: center; gap: 10px;">
+            <div>
+                <input type="text" id="todo-title" placeholder="Add a task titile...">
+            </div>
+            <div>
+                <input type="text" id="todo-discription" placeholder="Add a task description...">
+            </div> 
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top:20px">
+            <button id="add-todo" onclick="addTodo()">Add Task</button>
+        </div>
+        <ul></ul>
+    </div> 
+
+
+    <script>
+        console.log("Hello world");
+
+        const title = document.getElementById("todo-title");
+        const description = document.getElementById("todo-discription");
+
+        function addTodo() {
+            const todoTitle = title.value;
+            const todoDescription = description.value;
+
+            if (todoTitle === "" || todoDescription === "") {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            console.log("Title: " + todoTitle);
+            console.log("Description: " + todoDescription);
+
+            const todoItem = document.createElement("li");
+            todoItem.textContent = `${todoTitle} - ${todoDescription}`;
+            document.querySelector("ul").appendChild(todoItem);
+
+            todoItem.innerHTML += `<button onclick="deleteTodo(this)">Delete</button>`;
+
+            title.value = "";
+            description.value = "";
+        }
+
+
+        function deleteTodo(button) {
+            const todoItem = button.parentElement;
+            todoItem.remove();
+        }
+        // console.log(title.value);
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple To-Do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 50px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #todo-form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    #todo-form input {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    #todo-form button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 400px;
+      margin: auto;
+    }
+    li {
+      background: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>To-Do List</h1>
+
+  <div id="todo-form">
+    <input type="text" id="todo-input" placeholder="Enter a new task...">
+    <button onclick="addTodo()">Add</button>
+  </div>
+
+  <ul id="todo-list"></ul>
+
+  <script>
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-list');
+
+    function addTodo() {
+      const taskText = todoInput.value.trim();
+      if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+      }
+
+      const li = document.createElement('li');
+
+      li.innerHTML = `
+        <span onclick="toggleComplete(this)">${taskText}</span>
+        <button class="delete-btn" onclick="deleteTodo(this)">Delete</button>
+      `;
+
+      todoList.appendChild(li);
+      todoInput.value = '';
+    }
+
+    function deleteTodo(button) {
+      const li = button.parentElement;
+      todoList.removeChild(li);
+    }
+
+    function toggleComplete(span) {
+      span.parentElement.classList.toggle('completed');
+    }
+
+    todoInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        addTodo();
+      }
+    });
+  </script>
+
+</body>
+</html>
